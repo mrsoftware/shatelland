@@ -13,7 +13,7 @@ const style = theme =>({
         position:'relative',
     },
     login:{
-        marginTop:30,
+        marginTop:'calc(30vh / 2 )',
         width:'100%',
         height:'500px',
         background:'#fff',
@@ -50,7 +50,7 @@ const style = theme =>({
 const Login = function (props){
     return (
         <Grid container justify={"center"} className={props.classes.root}>
-            <Grid item xs={6}>
+            <Grid item xs={10} md={8} lg={6}>
                 <Paper className={props.classes.login}>
                     <Grid container className={props.classes.root}>
                         <Grid item xs={4} className={classNames(props.classes.loginLeft,props.classes.description)}>
