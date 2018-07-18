@@ -1,5 +1,7 @@
 export default {
     loginRequest:false,
     loggedIn:false,
-    self:{}
+    self:{},
+    error:'',
+    showMessageBox:false
 }

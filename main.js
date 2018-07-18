@@ -1,5 +1,6 @@
-const {app,BrowserWindow} = require('electron');
+const {app,BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
+const api = require('./app/apiHandler');
 require('dotenv').config();
 if (process.env.NODE_ENV === "development") {
     require('electron-reload')(__dirname, {
@@ -38,3 +39,4 @@ app.on('ready',createMainWindow);
 app.on('window-all-closed',()=> process.platform !== 'darwin' ? app.quit() : '');
 app.on('activate',createMainWindow);
 
+ipcMain.on('USER_LOGIN',api.login);

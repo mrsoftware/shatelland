@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+    target: "electron-main",
     entry: ["./src/index.js"],
     output: {
         path: path.resolve(__dirname,'public/dist'),

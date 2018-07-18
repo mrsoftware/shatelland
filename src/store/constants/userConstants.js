@@ -1,5 +1,6 @@
 export default {
     USER_LOGIN: 'USER_LOGIN',
     LOGIN_REQUEST: 'LOGIN_REQUEST',
-    SET_USER: 'SET_USER'
+    SET_USER: 'SET_USER',
+    MESSAGE_BOX:'MESSAGE_BOX'
 }

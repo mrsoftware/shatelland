@@ -3,6 +3,7 @@ import Login from './components/Login';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { connect } from 'react-redux';
+import Snackbar from "@material-ui/core/Snackbar";
 import userActions from './store/actions/user.actions';
 
 const theme=createMuiTheme({
@@ -22,13 +23,22 @@ class App extends Component {
             <MuiThemeProvider theme={theme} >
                 <CssBaseline />
                 <Login loginHandler={this.loginHandler}/>
+                <Snackbar
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right'}}
+                    open={this.props.showMessageBox}
+                    autoHideDuration={6000}
+                    ContentProps={{'aria-describedby': 'message-id' }}
+                    message={this.props.error}
+                />
             </MuiThemeProvider>
         );
     }
 }
 
 const mapStateToProps = (state) =>{
-    return state;
+    console.log(state);
+    const { error, showMessageBox } = state.userReducer;
+    return {error,showMessageBox};
 };
 
 export default connect(mapStateToProps)(App);
