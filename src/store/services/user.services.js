@@ -16,4 +16,7 @@ const login=(Email,Password)=>{
         });
     });
 };
-export default {login}
+const check=()=>{
+    return localStorage.getItem('User') ? JSON.parse(localStorage.getItem('User')) : false;
+};
+export default {login, check}
