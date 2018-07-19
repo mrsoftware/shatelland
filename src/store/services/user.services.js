@@ -4,7 +4,7 @@ const login=(Email,Password)=>{
     return new Promise((resolve,reject)=>{
         ipcRenderer.send('USER_LOGIN',{Email,Password,Remember:'true',redirectTo:'~/Upload/Index'});
         ipcRenderer.on('USER_LOGIN',(event, result)=>{
-            if (result==='login failed'){
+            if (result===false){
                 reject(result);
             } else{
                 document.cookie = result.Cookie;

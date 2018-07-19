@@ -17,7 +17,7 @@ export const login=(email,password)=> dispatch => {
             dispatch(messageBox(false,''));
         },3000);
     }).catch(err=>{
-        if (err === 'Login failed.') err="نام کاربر یا رمز عبور اشتباه است";
+        if (err === false) err="نام کاربر یا رمز عبور اشتباه است.";
         setTimeout(()=>{
             dispatch(messageBox(false,''));
         },3000);
@@ -27,14 +27,20 @@ export const login=(email,password)=> dispatch => {
 };
 const check = ()=>dispatch=>{
     dispatch(messageBox(true,'لطفا کمی صبر کنید ...'));
+    dispatch(_loginRequest(true));
     const user = userServices.check();
     if (user){
         dispatch(messageBox(true,'ورود با موفقت انجام شد.'));
         dispatch(_loggedIn(true));
         dispatch(_setUser(user));
         dispatch(push('/dashboard'));
-        dispatch(messageBox(false,'ورود با موفقت انجام شد.'));
+    }else{
+        dispatch(messageBox(true,'از حساب کاربری خود خارج شده اید.'));
     }
+    dispatch(_loginRequest(false));
+    setTimeout(()=>{
+        dispatch(messageBox(false,''));
+    },3000);
 };
 const _loginRequest=(result)=>{
     return {

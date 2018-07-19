@@ -37,23 +37,19 @@ class App extends Component {
                     ContentProps={{'aria-describedby': 'message-id' }}
                     message={this.props.error}
                 />
-                {this.props.loggedIn ? (
+                {this.props.loginRequest===false ? (
                     <ConnectedRouter history={history}>
                         <Switch >
                             <Route exact path='/' render={(routeProps)=>{
-                               return this.props.loggedIn ? (<Login {...routeProps} loginHandler={this.loginHandler}/>) : (<Redirect to={'/dashboard'}/>)
+                               return (<Login {...routeProps} loginHandler={this.loginHandler}/>)
                             }}/>
-                            <Route exact path='/dashboard' render={(routeProps)=> <Dashboard user={this.props.self} {...routeProps}/>}/>
+                            <Route exact path='/dashboard' render={(routeProps)=>{
+                                return this.props.loggedIn ? (<Dashboard user={this.props.self} {...routeProps}/>) : (<Redirect to={'/'}/>)
+                            }}/>
                             <Route render={()=>(<div> Not Found </div>)}/>
                         </Switch>
                     </ConnectedRouter>
-                ) : (<Snackbar
-                    anchorOrigin={{ vertical: 'top', horizontal: 'right'}}
-                    open={true}
-                    autoHideDuration={6000}
-                    ContentProps={{'aria-describedby': 'message-id' }}
-                    message="در حال بررسی اعتبار صبور باشید"
-                />)}
+                ) : (<React.Fragment/>)}
 
 
             </MuiThemeProvider>
@@ -62,8 +58,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) =>{
-    const { error, showMessageBox, loggedIn, self } = state.userReducer;
-    return {error, showMessageBox, loggedIn, self };
+    const { error, showMessageBox, loggedIn, self, loginRequest } = state.userReducer;
+    return {error, showMessageBox, loggedIn, self, loginRequest };
 };
 
 export default connect(mapStateToProps)(App);

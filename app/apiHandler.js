@@ -20,7 +20,7 @@ module.exports ={
                     result.Cookie = Cookie;
                     return postChi('GET','http://www.shatelland.com/user/edit',{},{Cookie,'Cache-Control': 'no-cache'});
                 }else{
-                    return Promise.reject('Login failed.');
+                    return Promise.reject(false);
                 }
             }).then(index=>{
                 if(index.body.indexOf('<title>شاتل لند |  پروفایل</title>')!==-1){
@@ -37,7 +37,7 @@ module.exports ={
                     };
                     event.sender.send('USER_LOGIN',result);
                 }else{
-                    return Promise.reject('Login failed.');
+                    return Promise.reject(false);
                 }
             }).catch(err=>{
                 event.sender.send('USER_LOGIN',err);
