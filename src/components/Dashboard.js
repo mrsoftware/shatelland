@@ -22,6 +22,7 @@ class Dashboard extends Component {
         this.setState({menuOpen: !this.state.menuOpen});
     };
     render() {
+        console.log(this.props);
         const { classes } = this.props;
         return (
             <React.Fragment>
@@ -29,8 +30,8 @@ class Dashboard extends Component {
                 <SideBar user={this.props.user} menuOpen={this.state.menuOpen}/>
                 <main className={classes.main}>
                     <Switch >
-                        <Route exact path={`${this.props.match.url}/`} render={(routeProps)=>(
-                            <Home {...routeProps}/>
+                        <Route exact path={`${this.props.match.url}/`}  render={(routeProps)=>(
+                            <Home info={this.props.info} user={this.props.user} {...routeProps}/>
                         )}/>
                     </Switch>
                 </main>

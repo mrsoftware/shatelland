@@ -44,7 +44,7 @@ class App extends Component {
                                return (<Login {...routeProps} loginHandler={this.loginHandler}/>)
                             }}/>
                             <Route exact path='/dashboard' render={(routeProps)=>{
-                                return this.props.loggedIn ? (<Dashboard user={this.props.self} {...routeProps}/>) : (<Redirect to={'/'}/>)
+                                return this.props.loggedIn ? (<Dashboard info={this.props.info} user={this.props.self} {...routeProps}/>) : (<Redirect to={'/'}/>)
                             }}/>
                             <Route render={()=>(<div> Not Found </div>)}/>
                         </Switch>
@@ -59,7 +59,8 @@ class App extends Component {
 
 const mapStateToProps = (state) =>{
     const { error, showMessageBox, loggedIn, self, loginRequest } = state.userReducer;
-    return {error, showMessageBox, loggedIn, self, loginRequest };
+    const { info } = state.appReducer;
+    return {error, showMessageBox, loggedIn, self, loginRequest, info };
 };
 
 export default connect(mapStateToProps)(App);
