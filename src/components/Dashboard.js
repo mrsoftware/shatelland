@@ -3,7 +3,7 @@ import SideBar from './SideBar';
 import TopMenu from './TopMenu'
 import {Route, Switch} from "react-router-dom";
 import {withStyles} from '@material-ui/core/styles';
-import DashItems from './DashItems';
+import Home from './Home';
 
 const style =() =>({
     main:{
@@ -30,7 +30,7 @@ class Dashboard extends Component {
                 <main className={classes.main}>
                     <Switch >
                         <Route exact path={`${this.props.match.url}/`} render={(routeProps)=>(
-                            <DashItems {...routeProps}/>
+                            <Home {...routeProps}/>
                         )}/>
                     </Switch>
                 </main>

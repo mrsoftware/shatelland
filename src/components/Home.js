@@ -15,7 +15,7 @@ const  style = () =>({
         padding:10
     }
 });
-const DashItems = function ({classes}) {
+const Home = function ({classes}) {
     return (
         <div className={classes.root}>
             <Grid container>
@@ -34,4 +34,4 @@ const DashItems = function ({classes}) {
     )
 };
 
-export default withStyles(style)(DashItems);
+export default withStyles(style)(Home);
