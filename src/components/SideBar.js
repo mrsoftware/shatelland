@@ -26,6 +26,9 @@ const style = theme => ({
         width:'100%',
         float:'left'
     },
+    Drawer:{
+        float:'right'
+    },
     drawerPaper: {
         position: 'relative',
         whiteSpace: 'nowrap',
@@ -90,6 +93,7 @@ class SideBar extends React.Component{
             <Drawer
                 variant="persistent"
                 elevation={2}
+                className={classes.Drawer}
                 classes={{
                     paper: classNames(classes.drawerPaper),
                 }}
