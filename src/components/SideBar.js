@@ -26,11 +26,8 @@ const style = theme => ({
         width:'100%',
         float:'left'
     },
-    Drawer:{
-        float:'right'
-    },
     drawerPaper: {
-        position: 'relative',
+        position: 'absolute',
         whiteSpace: 'nowrap',
         width: drawerWidth,
         height: 'calc(100vh - 48px)',
@@ -90,91 +87,92 @@ class SideBar extends React.Component{
     render(){
         const {classes} = this.props;
         return (
-            <Drawer
-                variant="persistent"
-                elevation={2}
-                className={classes.Drawer}
-                classes={{
-                    paper: classNames(classes.drawerPaper),
-                }}
-                open={this.props.menuOpen}
-            >
-                <div className={classes.sideBar}>
-                    <List component={'nav'} className={classNames(classes.List,classes.logo)}>
-                        <ListItem className={classes.ListItem}>
-                                <Avatar alt="Remy Sharp" src={"https://www.gravatar.com/avatar/"+md5(this.props.user.email)+'?size=300'} className={classes.avatar} />
-                            <ListItemText
-                                classes={{primary:classes.name,secondary:classes.email}}
-                                primary={this.props.user.name.first+' '+this.props.user.name.last}
-                                secondary={this.props.user.email}
-                            />
-                        </ListItem>
-                    </List>
-                    <List component={'nav'} className={classes.List}>
-                        <ListItem button className={classes.ListItem}>
-                            <ListItemIcon>
-                                <AppsIcon style={{color:'#fff'}}/>
-                            </ListItemIcon>
-                            <ListItemText
-                                classes={{primary:classes.ListItemText}}
-                                primary='بخش اصلی'
-                            />
-                        </ListItem>
-                        <ListItem button className={classes.ListItem} onClick={this.fileMenu}>
-                            <ListItemIcon>
-                                {this.state.fileOpen ? <FolderOpenIcon style={{color:'#fff'}}  /> : <FolderIcon style={{color:'#fff'}} />}
-                            </ListItemIcon>
-                            <ListItemText classes={{primary:classes.ListItemText}}  primary='مدیریت فایل ها'/>
-                            {this.state.fileOpen ? <ExpandLess style={{color:'#fff'}}  /> : <ExpandMore style={{color:'#fff'}} />}
-                        </ListItem>
-                        <Collapse in={this.state.fileOpen} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding>
-                                <ListItem button>
-                                    <ListItemIcon>
-                                        <FolderIcon style={{color:'#fff'}} />
-                                    </ListItemIcon>
-                                    <ListItemText inset primary="فیلم ها" classes={{primary:classes.ListItemText}} />
-                                </ListItem>
-                                <ListItem button>
-                                    <ListItemIcon>
-                                        <FolderIcon style={{color:'#fff'}} />
-                                    </ListItemIcon>
-                                    <ListItemText inset primary="آهنگ ها" classes={{primary:classes.ListItemText}} />
-                                </ListItem>
-                                <ListItem button>
-                                    <ListItemIcon>
-                                        <FolderIcon style={{color:'#fff'}} />
-                                    </ListItemIcon>
-                                    <ListItemText inset primary="عکس ها" classes={{primary:classes.ListItemText}} />
-                                </ListItem>
-                            </List>
-                        </Collapse>
-                        <ListItem button className={classes.ListItem} onClick={this.downloadMenu}>
-                            <ListItemIcon>
-                                <CloudDownloadIcon style={{color:'#fff'}}/>
-                            </ListItemIcon>
-                            <ListItemText classes={{primary:classes.ListItemText}} primary='دانلود ها' />
-                            {this.state.downloadOpen ? <ExpandLess style={{color:'#fff'}}  /> : <ExpandMore style={{color:'#fff'}} />}
-                        </ListItem>
-                        <Collapse in={this.state.downloadOpen} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding>
-                                <ListItem button>
-                                    <ListItemIcon>
-                                        <CloudIcon style={{color:'#fff'}} />
-                                    </ListItemIcon>
-                                    <ListItemText inset primary="همه دانلود ها" classes={{primary:classes.ListItemText}} />
-                                </ListItem>
-                                <ListItem button>
-                                    <ListItemIcon>
-                                        <DeleteIcon style={{color:'#fff'}} />
-                                    </ListItemIcon>
-                                    <ListItemText inset primary="حذف شده" classes={{primary:classes.ListItemText}} />
-                                </ListItem>
-                            </List>
-                        </Collapse>
-                    </List>
-                </div>
-            </Drawer>
+            <div style={{position:'relative'}}>
+                <Drawer
+                    variant="persistent"
+                    elevation={2}
+                    classes={{
+                        paper: classNames(classes.drawerPaper),
+                    }}
+                    open={this.props.menuOpen}
+                >
+                    <div className={classes.sideBar}>
+                        <List component={'nav'} className={classNames(classes.List,classes.logo)}>
+                            <ListItem className={classes.ListItem}>
+                                    <Avatar alt="Remy Sharp" src={"https://www.gravatar.com/avatar/"+md5(this.props.user.email)+'?size=300'} className={classes.avatar} />
+                                <ListItemText
+                                    classes={{primary:classes.name,secondary:classes.email}}
+                                    primary={this.props.user.name.first+' '+this.props.user.name.last}
+                                    secondary={this.props.user.email}
+                                />
+                            </ListItem>
+                        </List>
+                        <List component={'nav'} className={classes.List}>
+                            <ListItem button className={classes.ListItem}>
+                                <ListItemIcon>
+                                    <AppsIcon style={{color:'#fff'}}/>
+                                </ListItemIcon>
+                                <ListItemText
+                                    classes={{primary:classes.ListItemText}}
+                                    primary='بخش اصلی'
+                                />
+                            </ListItem>
+                            <ListItem button className={classes.ListItem} onClick={this.fileMenu}>
+                                <ListItemIcon>
+                                    {this.state.fileOpen ? <FolderOpenIcon style={{color:'#fff'}}  /> : <FolderIcon style={{color:'#fff'}} />}
+                                </ListItemIcon>
+                                <ListItemText classes={{primary:classes.ListItemText}}  primary='مدیریت فایل ها'/>
+                                {this.state.fileOpen ? <ExpandLess style={{color:'#fff'}}  /> : <ExpandMore style={{color:'#fff'}} />}
+                            </ListItem>
+                            <Collapse in={this.state.fileOpen} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding>
+                                    <ListItem button>
+                                        <ListItemIcon>
+                                            <FolderIcon style={{color:'#fff'}} />
+                                        </ListItemIcon>
+                                        <ListItemText inset primary="فیلم ها" classes={{primary:classes.ListItemText}} />
+                                    </ListItem>
+                                    <ListItem button>
+                                        <ListItemIcon>
+                                            <FolderIcon style={{color:'#fff'}} />
+                                        </ListItemIcon>
+                                        <ListItemText inset primary="آهنگ ها" classes={{primary:classes.ListItemText}} />
+                                    </ListItem>
+                                    <ListItem button>
+                                        <ListItemIcon>
+                                            <FolderIcon style={{color:'#fff'}} />
+                                        </ListItemIcon>
+                                        <ListItemText inset primary="عکس ها" classes={{primary:classes.ListItemText}} />
+                                    </ListItem>
+                                </List>
+                            </Collapse>
+                            <ListItem button className={classes.ListItem} onClick={this.downloadMenu}>
+                                <ListItemIcon>
+                                    <CloudDownloadIcon style={{color:'#fff'}}/>
+                                </ListItemIcon>
+                                <ListItemText classes={{primary:classes.ListItemText}} primary='دانلود ها' />
+                                {this.state.downloadOpen ? <ExpandLess style={{color:'#fff'}}  /> : <ExpandMore style={{color:'#fff'}} />}
+                            </ListItem>
+                            <Collapse in={this.state.downloadOpen} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding>
+                                    <ListItem button>
+                                        <ListItemIcon>
+                                            <CloudIcon style={{color:'#fff'}} />
+                                        </ListItemIcon>
+                                        <ListItemText inset primary="همه دانلود ها" classes={{primary:classes.ListItemText}} />
+                                    </ListItem>
+                                    <ListItem button>
+                                        <ListItemIcon>
+                                            <DeleteIcon style={{color:'#fff'}} />
+                                        </ListItemIcon>
+                                        <ListItemText inset primary="حذف شده" classes={{primary:classes.ListItemText}} />
+                                    </ListItem>
+                                </List>
+                            </Collapse>
+                        </List>
+                    </div>
+                </Drawer>
+            </div>
         )
     }
 }

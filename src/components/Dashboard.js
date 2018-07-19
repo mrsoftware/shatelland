@@ -7,6 +7,7 @@ import {withStyles} from '@material-ui/core/styles';
 const style =() =>({
     main:{
         float:'left',
+        width:'100%'
     }
 });
 class Dashboard extends Component {
@@ -25,7 +26,7 @@ class Dashboard extends Component {
             <React.Fragment>
                 <TopMenu menuHandler={this.menuHandler}/>
                 <SideBar user={this.props.user} menuOpen={this.state.menuOpen}/>
-                <main className={classes.main} style={{width: this.state.menuOpen ? 'calc(100vw - 300px)' : '100%'}}>
+                <main className={classes.main}>
                     <Switch >
                         <Route exact path={`${this.props.match.url}/`} render={()=>(
                             <div>Dash Items</div>
