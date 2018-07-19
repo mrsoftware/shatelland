@@ -10,6 +10,11 @@ import List from "@material-ui/core/es/List/List";
 import {byteFormatTo} from "../helpers/utils";
 import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProgress";
 import {green} from '@material-ui/core/colors';
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/es/Tabs/Tabs";
+import Tab from "@material-ui/core/Tab";
+import SwipeableViews from 'react-swipeable-views';
+import InputLabel from "@material-ui/core/InputLabel";
 
 const  style = theme =>({
     root:{
@@ -99,81 +104,132 @@ const  style = theme =>({
         color: '#fff',
         borderRadius:'50%',
         fontSize:14
+    },
+    normalUploadBox:{
+        padding:10,
+        borderRadius:5,
+        background:'#ebebeb',
+        float:'right',
+        width:'100%'
     }
 });
-const Home = function ({classes,user,info}) {
-    return (
-        <div className={classes.root}>
-            <Grid container>
-                <Grid item md={6}>
-                    <Paper className={classes.Paper}>
-                        <Grid container>
-                            <Grid item xs={6}>
-                                <div className={classes.header}><Typography variant={"title"}>اطلاعات کاربری</Typography></div>
-                                <div className={classes.information}>
-                                    <List>
-                                        <ListItem style={{paddingRight:5}} className={classes.ListItem} disableGutters title={user.name.first+' '+user.name.last + ' ' +user.email}>
-                                            <div className={classes.wrapper}>
-                                                <Avatar style={{width:80,height:80}} alt={user.name.first + ' ' + user.name.last} src={user.avatar+'?size=80'} />
-                                                <div title='مصرف شده' className={classes.percentage}>% {Math.round(100 - (info.AccountLength / info.OffsetLength  * 100))}</div>
-                                                <CircularProgress thickness={1.6} value={100 - (info.AccountLength / info.OffsetLength  * 100)} size={90} className={classes.fabProgress} variant={"static"} />
-                                            </div>
-                                            <ListItemText
-                                                style={{borderBottom:'1px solid #ebebeb',paddingBottom:10}}
-                                                classes={{primary:classes.name,secondary:classes.email}}
-                                                primary={user.name.first+' '+user.name.last}
-                                                secondary={user.email}
-                                            />
-                                        </ListItem>
-                                        <ListItem style={{padding:10}} className={classes.ListItem} disableGutters title={user.name.first+' '+user.name.last + ' ' +user.email}>
-                                            <ListItemText
-                                                style={{marginTop:10}}
-                                                classes={{primary:classes.name,secondary:classes.phone}}
-                                                primary='موبایل'
-                                                secondary={user.callPhone}
-                                            />
-                                        </ListItem>
-                                        <ListItem style={{padding:10}} className={classes.ListItem} disableGutters title={user.name.first+' '+user.name.last + ' ' +user.email}>
-                                            <ListItemText
-                                                style={{marginTop:10}}
-                                                classes={{primary:classes.name,secondary:classes.phone}}
-                                                primary='شماره ثابت'
-                                                secondary={user.phone}
-                                            />
-                                        </ListItem>
-                                        <ListItem style={{padding:10}} className={classes.ListItem} disableGutters title={user.name.first+' '+user.name.last + ' ' +user.email}>
-                                            <ListItemText
-                                                style={{marginTop:10}}
-                                                classes={{primary:classes.name,secondary:classes.phone}}
-                                                primary='فضای کل'
-                                                secondary={byteFormatTo(info.OffsetLength).replace('GB','گیگابایت')}
-                                            />
-                                        </ListItem>
-                                        <ListItem style={{padding:10}} className={classes.ListItem} disableGutters title={user.name.first+' '+user.name.last + ' ' +user.email}>
-                                            <ListItemText
-                                                style={{marginTop:10}}
-                                                classes={{primary:classes.name,secondary:classes.phone}}
-                                                primary='فضای مصرف شده'
-                                                secondary={byteFormatTo(info.OffsetLength - info.AccountLength,undefined,'FA')}
-                                            />
-                                        </ListItem>
-                                    </List>
-                                </div>
+class Home extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            value:0
+        }
+    }
+    handleChange = (event, value) => {
+        this.setState({ value });
+    };
+    handleChangeIndex = index => {
+        this.setState({ value: index });
+    };
+    render(){
+        const {classes, user, info} = this.props;
+        return (
+            <div className={classes.root}>
+                <Grid container>
+                    <Grid item md={6}>
+                        <Paper className={classes.Paper}>
+                            <Grid container>
+                                <Grid item xs={6}>
+                                    <div className={classes.header}><Typography variant={"title"}>اطلاعات کاربری</Typography></div>
+                                    <div className={classes.information}>
+                                        <List>
+                                            <ListItem style={{paddingRight:5}} className={classes.ListItem} disableGutters title={user.name.first+' '+user.name.last + ' ' +user.email}>
+                                                <div className={classes.wrapper}>
+                                                    <Avatar style={{width:80,height:80}} alt={user.name.first + ' ' + user.name.last} src={user.avatar+'?size=80'} />
+                                                    <div title='مصرف شده' className={classes.percentage}>% {Math.round(100 - (info.AccountLength / info.OffsetLength  * 100))}</div>
+                                                    <CircularProgress thickness={1.6} value={100 - (info.AccountLength / info.OffsetLength  * 100)} size={90} className={classes.fabProgress} variant={"static"} />
+                                                </div>
+                                                <ListItemText
+                                                    style={{borderBottom:'1px solid #ebebeb',paddingBottom:10}}
+                                                    classes={{primary:classes.name,secondary:classes.email}}
+                                                    primary={user.name.first+' '+user.name.last}
+                                                    secondary={user.email}
+                                                />
+                                            </ListItem>
+                                            <ListItem style={{padding:10}} className={classes.ListItem} disableGutters title={user.name.first+' '+user.name.last + ' ' +user.email}>
+                                                <ListItemText
+                                                    style={{marginTop:10}}
+                                                    classes={{primary:classes.name,secondary:classes.phone}}
+                                                    primary='موبایل'
+                                                    secondary={user.callPhone}
+                                                />
+                                            </ListItem>
+                                            <ListItem style={{padding:10}} className={classes.ListItem} disableGutters title={user.name.first+' '+user.name.last + ' ' +user.email}>
+                                                <ListItemText
+                                                    style={{marginTop:10}}
+                                                    classes={{primary:classes.name,secondary:classes.phone}}
+                                                    primary='شماره ثابت'
+                                                    secondary={user.phone}
+                                                />
+                                            </ListItem>
+                                            <ListItem style={{padding:10}} className={classes.ListItem} disableGutters title={user.name.first+' '+user.name.last + ' ' +user.email}>
+                                                <ListItemText
+                                                    style={{marginTop:10}}
+                                                    classes={{primary:classes.name,secondary:classes.phone}}
+                                                    primary='فضای کل'
+                                                    secondary={byteFormatTo(info.OffsetLength).replace('GB','گیگابایت')}
+                                                />
+                                            </ListItem>
+                                            <ListItem style={{padding:10}} className={classes.ListItem} disableGutters title={user.name.first+' '+user.name.last + ' ' +user.email}>
+                                                <ListItemText
+                                                    style={{marginTop:10}}
+                                                    classes={{primary:classes.name,secondary:classes.phone}}
+                                                    primary='فضای مصرف شده'
+                                                    secondary={byteFormatTo(info.OffsetLength - info.AccountLength,undefined,'FA')}
+                                                />
+                                            </ListItem>
+                                        </List>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <div className={classes.profileImage} style={{background:`url('${user.avatar}?size=500') center`}}></div>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={6}>
-                                <div className={classes.profileImage} style={{background:`url('${user.avatar}?size=500') center`}}></div>
-                            </Grid>
-                        </Grid>
-                    </Paper>
+                        </Paper>
+                    </Grid>
+                    <Grid item md={6}>
+                        <Paper className={classes.Paper} style={{paddingBottom:20}}>
+                            <AppBar position="static" color="default">
+                                <Tabs
+                                    value={this.state.value}
+                                    onChange={this.handleChange}
+                                    indicatorColor="primary"
+                                    textColor="primary"
+                                    fullWidth
+                                >
+                                    <Tab label="آپلود فایل" />
+                                    <Tab label="انتقال فایل" />
+                                    <Tab label="انتقال از یوتوب" />
+                                </Tabs>
+                            </AppBar>
+
+                            <SwipeableViews
+                                axis={'x-reverse'}
+                                index={this.state.value}
+                                onChangeIndex={this.handleChangeIndex}
+                            >
+                                <Typography component="div" dir='rtl' style={{ padding: 8 * 3 }}>
+                                    <div className={classes.normalUploadBox}>
+                                        <form>
+                                            <InputLabel style={{float:'right',background:'#2ec4d9',padding:10,borderRadius:10,color:'#fff',cursor:'pointer'}} htmlFor="normalUpload">انتخاب فایل</InputLabel>
+                                            <input type='file' id='normalUpload' style={{display:'none'}}/>
+                                        </form>
+                                    </div>
+                                </Typography>
+                                <Typography component="div" dir='rtl' style={{ padding: 8 * 3 }}>انتقال فایل</Typography>
+                                <Typography component="div" dir='rtl' style={{ padding: 8 * 3 }}>انتقال فایل از یوتوب</Typography>
+                            </SwipeableViews>
+                        </Paper>
+                    </Grid>
                 </Grid>
-                <Grid item md={6}>
-                    <Paper className={classes.Paper}>
-                        آپلواد سریع فایل
-                    </Paper>
-                </Grid>
-            </Grid>
-        </div>
-    )
-};
+            </div>
+        )
+    }
+}
 
 export default withStyles(style)(Home);
