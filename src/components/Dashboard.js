@@ -3,6 +3,7 @@ import SideBar from './SideBar';
 import TopMenu from './TopMenu'
 import {Route, Switch} from "react-router-dom";
 import {withStyles} from '@material-ui/core/styles';
+import DashItems from './DashItems';
 
 const style =() =>({
     main:{
@@ -28,8 +29,8 @@ class Dashboard extends Component {
                 <SideBar user={this.props.user} menuOpen={this.state.menuOpen}/>
                 <main className={classes.main}>
                     <Switch >
-                        <Route exact path={`${this.props.match.url}/`} render={()=>(
-                            <div>Dash Items</div>
+                        <Route exact path={`${this.props.match.url}/`} render={(routeProps)=>(
+                            <DashItems {...routeProps}/>
                         )}/>
                     </Switch>
                 </main>
