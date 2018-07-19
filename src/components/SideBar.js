@@ -16,7 +16,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Avatar from '@material-ui/core/Avatar';
 import Collapse from "@material-ui/core/Collapse";
-import md5 from 'md5';
 
 const drawerWidth = 300;
 const style = theme => ({
@@ -99,7 +98,7 @@ class SideBar extends React.Component{
                     <div className={classes.sideBar}>
                         <List component={'nav'} className={classNames(classes.List,classes.logo)}>
                             <ListItem className={classes.ListItem}>
-                                    <Avatar alt="Remy Sharp" src={"https://www.gravatar.com/avatar/"+md5(this.props.user.email)+'?size=300'} className={classes.avatar} />
+                                    <Avatar alt="Remy Sharp" src={this.props.user.avatar} className={classes.avatar} />
                                 <ListItemText
                                     classes={{primary:classes.name,secondary:classes.email}}
                                     primary={this.props.user.name.first+' '+this.props.user.name.last}

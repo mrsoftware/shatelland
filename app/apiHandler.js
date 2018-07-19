@@ -1,5 +1,6 @@
 const cheerio = require('cheerio');
 const request = require('request');
+const md5 = require('md5');
 
 postChi = (method,url='',formData={},headers={}) => {
     return new Promise((resolve,reject)=>{
@@ -35,6 +36,7 @@ module.exports ={
                         phone: $('#Attributes_Phone_')['0'].attribs.value,
                         address: $('#Attributes_Address_')['0'].attribs.value,
                     };
+                    result.User.avatar=`https://www.gravatar.com/avatar/${md5(result.User.email)}`;
                     return postChi('GET','http://www.shatelland.com/api/Archive/getUserUploadAccInfo',{},{Cookie:result.Cookie,'Cache-Control': 'no-cache'});
                 }else{
                     return Promise.reject(false);
