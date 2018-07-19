@@ -30,17 +30,6 @@ const style = theme => ({
             duration: theme.transitions.duration.enteringScreen,
         }),
     },
-    drawerPaperClose: {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing.unit * 10,
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing.unit * 10,
-        },
-    },
     logo:{
         width:'100%',
         float:'left',
@@ -103,10 +92,10 @@ class SideBar extends React.Component{
         const {classes} = this.props;
         return (
             <Drawer
-                variant="permanent"
+                variant="persistent"
                 elevation={2}
                 classes={{
-                    paper: classNames(classes.drawerPaper, !this.props.menuOpen && classes.drawerPaperClose),
+                    paper: classNames(classes.drawerPaper),
                 }}
                 open={this.props.menuOpen}
             >
