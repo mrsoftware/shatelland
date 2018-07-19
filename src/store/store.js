@@ -3,8 +3,9 @@ import thunk from 'redux-thunk';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import history from "./history";
 import {userReducer} from './reducers/user.reducer';
+import {appReducer} from "./reducers/app.reducer";
 
-const rootReducer = combineReducers({userReducer});
+const rootReducer = combineReducers({userReducer,appReducer});
 
 export default createStore(
     connectRouter(history)(rootReducer),

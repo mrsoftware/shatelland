@@ -10,6 +10,7 @@ const login=(Email,Password)=>{
                 document.cookie = result.Cookie;
                 localStorage.setItem('Cookie',result.Cookie);
                 localStorage.setItem('User',JSON.stringify(result.User));
+                localStorage.setItem('Info',JSON.stringify(result.Info));
                 resolve(result);
             }
 
@@ -17,6 +18,6 @@ const login=(Email,Password)=>{
     });
 };
 const check=()=>{
-    return localStorage.getItem('User') ? JSON.parse(localStorage.getItem('User')) : false;
+    return localStorage.getItem('User') ? {User:JSON.parse(localStorage.getItem('User')),Info:JSON.parse(localStorage.getItem('Info'))} : false;
 };
 export default {login, check}

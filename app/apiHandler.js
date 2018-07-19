@@ -35,10 +35,13 @@ module.exports ={
                         phone: $('#Attributes_Phone_')['0'].attribs.value,
                         address: $('#Attributes_Address_')['0'].attribs.value,
                     };
-                    event.sender.send('USER_LOGIN',result);
+                    return postChi('GET','http://www.shatelland.com/api/Archive/getUserUploadAccInfo',{},{Cookie:result.Cookie,'Cache-Control': 'no-cache'});
                 }else{
                     return Promise.reject(false);
                 }
+            }).then(accountInfo=>{
+                result.Info = JSON.parse(accountInfo.body);
+                event.sender.send('USER_LOGIN',result);
             }).catch(err=>{
                 event.sender.send('USER_LOGIN',err);
             });

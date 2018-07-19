@@ -1,7 +1,7 @@
 import { push } from 'connected-react-router';
 import userConstants from '../constants/userConstants';
 import userServices from '../services/user.services'
-
+import appActions from '../actions/app.actions';
 
 const {USER_LOGIN, LOGIN_REQUEST, SET_USER, MESSAGE_BOX} = userConstants;
 export const login=(email,password)=> dispatch => {
@@ -11,6 +11,7 @@ export const login=(email,password)=> dispatch => {
         dispatch(_loginRequest(false));
         dispatch(_loggedIn(true));
         dispatch(_setUser(info.User));
+        dispatch(appActions.saveInfo(info.Info));
         dispatch(messageBox(true,'ورود با موفقت انجام شد.'));
         dispatch(push('/dashboard'));
         setTimeout(()=>{
@@ -28,11 +29,12 @@ export const login=(email,password)=> dispatch => {
 const check = ()=>dispatch=>{
     dispatch(messageBox(true,'لطفا کمی صبر کنید ...'));
     dispatch(_loginRequest(true));
-    const user = userServices.check();
-    if (user){
+    const checkResult = userServices.check();
+    if (checkResult){
         dispatch(messageBox(true,'ورود با موفقت انجام شد.'));
         dispatch(_loggedIn(true));
-        dispatch(_setUser(user));
+        dispatch(_setUser(checkResult.User));
+        dispatch(appActions.saveInfo(checkResult.Info));
         dispatch(push('/dashboard'));
     }else{
         dispatch(messageBox(true,'از حساب کاربری خود خارج شده اید.'));
