@@ -126,6 +126,10 @@ class Home extends React.Component{
     handleChangeIndex = index => {
         this.setState({ value: index });
     };
+    handleUploadFile=()=>{
+        const file = document.getElementById('normalUpload').files[0];
+        this.props.uploadFile(file);
+    };
     render(){
         const {classes, user, info} = this.props;
         return (
@@ -217,7 +221,7 @@ class Home extends React.Component{
                                     <div className={classes.normalUploadBox}>
                                         <form>
                                             <InputLabel style={{float:'right',background:'#2ec4d9',padding:10,borderRadius:10,color:'#fff',cursor:'pointer'}} htmlFor="normalUpload">انتخاب فایل</InputLabel>
-                                            <input type='file' id='normalUpload' style={{display:'none'}}/>
+                                            <input onChange={this.handleUploadFile} type='file' id='normalUpload' style={{display:'none'}}/>
                                         </form>
                                     </div>
                                 </Typography>

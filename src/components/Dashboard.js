@@ -31,7 +31,7 @@ class Dashboard extends Component {
                 <main className={classes.main}>
                     <Switch >
                         <Route exact path={`${this.props.match.url}/`}  render={(routeProps)=>(
-                            <Home info={this.props.info} user={this.props.user} {...routeProps}/>
+                            <Home uploadFile={this.props.uploadFile} info={this.props.info} user={this.props.user} {...routeProps}/>
                         )}/>
                     </Switch>
                 </main>

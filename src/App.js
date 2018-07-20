@@ -9,6 +9,7 @@ import {ConnectedRouter} from "connected-react-router";
 import {Route, Switch, Redirect} from "react-router-dom";
 import history from './store/history';
 import Dashboard from './components/Dashboard';
+import appActions from './store/actions/app.actions';
 
 const theme=createMuiTheme({
     direction: "rtl",
@@ -26,6 +27,10 @@ class App extends Component {
         const { dispatch } = this.props;
         dispatch(userActions.check());
     }
+    uploadFile=(file)=>{
+        const {dispatch} = this.props;
+        dispatch(appActions.uploadFile(file));
+    };
     render() {
         return (
             <MuiThemeProvider theme={theme} >
@@ -44,7 +49,7 @@ class App extends Component {
                                return (<Login {...routeProps} loginHandler={this.loginHandler}/>)
                             }}/>
                             <Route exact path='/dashboard' render={(routeProps)=>{
-                                return this.props.loggedIn ? (<Dashboard info={this.props.info} user={this.props.self} {...routeProps}/>) : (<Redirect to={'/'}/>)
+                                return this.props.loggedIn ? (<Dashboard uploadFile={this.uploadFile} info={this.props.info} user={this.props.self} {...routeProps}/>) : (<Redirect to={'/'}/>)
                             }}/>
                             <Route render={()=>(<div> Not Found </div>)}/>
                         </Switch>

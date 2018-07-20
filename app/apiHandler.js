@@ -1,6 +1,7 @@
 const cheerio = require('cheerio');
 const request = require('request');
 const md5 = require('md5');
+const fs = require('fs');
 
 postChi = (method,url='',formData={},headers={}) => {
     return new Promise((resolve,reject)=>{
@@ -10,6 +11,7 @@ postChi = (method,url='',formData={},headers={}) => {
         });
     })
 };
+global.progress = 0;
 module.exports ={
     login(event,args){
         let Cookie;
@@ -47,5 +49,20 @@ module.exports ={
             }).catch(err=>{
                 event.sender.send('USER_LOGIN',err);
             });
-    }
+    },
+    uploadFile(event, {name, path, size, type},Cookie){
+        const file = fs.createReadStream(path).on('data',chunk => {
+            global.progress += (chunk.length / size ) * 100  ;
+        });
+        postChi('POST', 'https://dl4.shatelland.com/api/FileSystemArchive', {file: {value: file, options: {filename: name, contentType: null}}}, {'Cache-Control': 'no-cache',fileInfo: `${name}=${size}`, Cookie, 'Content-type': 'multipart/form-data' })
+            .then(response=>{
+                if (response==null) return Promise.reject(false);
+                event.sender.send('UPLOAD_FILE',JSON.parse(response.body));
+            }).catch(()=>{
+                event.sender.send('UPLOAD_FILE',false);
+            });
+    },
+    uploadFileProgress(event){
+        event.returnValue = global.progress;
+    },
 };

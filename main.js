@@ -40,3 +40,5 @@ app.on('window-all-closed',()=> process.platform !== 'darwin' ? app.quit() : '')
 app.on('activate',createMainWindow);
 
 ipcMain.on('USER_LOGIN',api.login);
+ipcMain.on('UPLOAD_FILE',api.uploadFile);
+ipcMain.on('UPLOAD_FILE_PROGRESS',api.uploadFileProgress);
